@@ -1,4 +1,4 @@
-#Import Flask and create flask object
+#Import Flask and create flask object 
 import flask
 from flask import request, jsonify
 
@@ -8,20 +8,23 @@ from shareplum import Office365
 
 
 #Sharepoint site information
-server_url = "https://"
-site_url = "https://"
+server_url = "https://ytpl.sharepoint.com"
+site_url = "https://ytpl.sharepoint.com/sites/demosite/PowerApps/"
 
-username = "@yash.com"
+username = ""
 passwd = ""
-leave_mgmt_list = 'lm_emp_leave_balance_record'
+leave_balance_list = 'lm_emp_leave_balance_record'
+leave_records_list = 'lm_employee_leave_record'
 
 #Get Authentication cookies
 authcookie = Office365(server_url, username = username, password = passwd).GetCookies()
-
-#Get all the data from sharepoint list
 site = Site(site_url, authcookie=authcookie)
-sp_list = site.List(leave_mgmt_list)
-#data = sp_list.GetListItems(fields=['emp_id', 'sick_leave', 'casual_leave', 'accumulated_leave'])
+
+#Get all the data from sharepoint list which holds employess leave balance record 
+sp_list = site.List(leave_balance_list)
+
+#Get all the data from sharepoint list which holds employees leave records
+leave_records = site.List(leave_records_list)
 
 
 # Create an object of Flask Class  and configure it run in debug mode
@@ -36,17 +39,17 @@ def all_leave_balances():
         #Check if an id is passed as query string and read the data from sharepoint based on the value of id passed
         if 'id' in request.args:
                 id = request.args['id']
-                fields = ["emp_id", "sick_leave", "casual_leave", "accumulated_leave"]
-                query = {'Where': [('Eq', 'emp_id', id)]}
-                data = sp_list.GetListItems(fields = fields, query = query)
-                return jsonify(data)
-
+		fields = ["emp_id", "sick_leave", "casual_leave", "accumulated_leave"]
+		query = {'Where': [('Eq', 'emp_id', id)]}
+		data = sp_list.GetListItems(fields = fields, query = query)
+		return jsonify(data)
+	
         else:
                 return jsonify({"error": "404"})
 
 
 #--------------------------------------------------------------------------------------------------------------
-#Route to get Casual leave balance of a user
+#Route to get Casual leave balance of a user 
 #--------------------------------------------------------------------------------------------------------------
 @app.route('/leaveapi/v1/balance/casualLeave', methods=['GET'])
 def casual_leave_balance():
@@ -95,6 +98,49 @@ def bereavement_leave_balance():
 
         else:
                 return jsonify({"error": "404"})
+
+
+
+#--------------------------------------------------------------------------------------------------------------
+#Route to get all leave records of an employee
+#--------------------------------------------------------------------------------------------------------------
+@app.route('/leaveapi/v1/leaves', methods = ['GET'])
+def get_all_leave_records():
+	if 'id' in request.args:
+		id = request.args['id']
+		fields = ["Title", "emp_name", "date_of_request", "leave_start_date", "leave_end_date", "manager", "leave_request_id", "leave_title", "leave_status", "leave_details", "no_of_leaves", "day_of_leave", "start_date_of_week", "end_date_of_week", "TimesheetWeek", "manager_email"]
+		query = {'Where': [('Eq', 'Title', id)]}
+		leave_data = leave_records.GetListItems(fields = fields, query = query)
+		return jsonify(leave_data)
+
+
+
+
+#--------------------------------------------------------------------------------------------------------------
+#Route to get all approved leave records of an employee
+#--------------------------------------------------------------------------------------------------------------
+@app.route('/leaveapi/v1/leaves/approved', methods = ['GET'])
+def get_approved_leave_records():
+        if 'id' in request.args:
+                id = request.args['id']
+                fields = ["Title", "emp_name", "date_of_request", "leave_start_date", "leave_end_date", "manager", "leave_request_id", "leave_title", "leave_status", "leave_details", "no_of_leaves", "day_of_leave", "start_date_of_week", "end_date_of_week", "TimesheetWeek", "manager_email"]
+                query = {'Where': ['And', ('Eq', 'Title', id), ('Eq', 'leave_status','Approved')]}
+                leave_data = leave_records.GetListItems(fields = fields, query = query)
+                return jsonify(leave_data)
+
+
+
+#--------------------------------------------------------------------------------------------------------------
+#Route to get all pending leave records of an employee
+#--------------------------------------------------------------------------------------------------------------
+@app.route('/leaveapi/v1/leaves/pending', methods = ['GET'])
+def get_pending_leave_records():
+        if 'id' in request.args:
+                id = request.args['id']
+                fields = ["Title", "emp_name", "date_of_request", "leave_start_date", "leave_end_date", "manager", "leave_request_id", "leave_title", "leave_status", "leave_details", "no_of_leaves", "day_of_leave", "start_date_of_week", "end_date_of_week", "TimesheetWeek", "manager_email"]
+                query = {'Where': ['And', ('Eq', 'Title', id), ('Eq', 'leave_status','Pending')]}
+                leave_data = leave_records.GetListItems(fields = fields, query = query)
+                return jsonify(leave_data)
 
 
 
