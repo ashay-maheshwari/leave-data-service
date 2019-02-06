@@ -1,0 +1,354 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "LeaveDataFetcher",
+    "description": "This is a simple connection test",
+    "version": "1.0"
+  },
+  "host": "40.121.88.94:8081",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/invoice/": {},
+    "/invoice/INV50000": {},
+    "/test": {},
+    "/balance": {},
+    "/sickLeaveBalance": {},
+    "/leaveapi/v1/balance": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "accumulated_leave": {
+                    "type": "string",
+                    "description": "accumulated_leave"
+                  },
+                  "casual_leave": {
+                    "type": "string",
+                    "description": "casual_leave"
+                  },
+                  "emp_id": {
+                    "type": "string",
+                    "description": "emp_id"
+                  },
+                  "sick_leave": {
+                    "type": "string",
+                    "description": "sick_leave"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "This is to fetch leave all type of balance",
+        "description": "All type of leave balance",
+        "operationId": "LeaveBalance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/leaveapi/v1/balance/sickLeave": {},
+    "/leaveapi/v1/balance/casualLeave": {},
+    "/leaveapi/v1/balance/bereavementLeave": {},
+    "/leaveapi/v1/leaves": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "TimesheetWeek": {
+                    "type": "string",
+                    "description": "TimesheetWeek"
+                  },
+                  "Title": {
+                    "type": "string",
+                    "description": "Title"
+                  },
+                  "date_of_request": {
+                    "type": "string",
+                    "description": "date_of_request"
+                  },
+                  "day_of_leave": {
+                    "type": "string",
+                    "description": "day_of_leave"
+                  },
+                  "emp_name": {
+                    "type": "string",
+                    "description": "emp_name"
+                  },
+                  "end_date_of_week": {
+                    "type": "string",
+                    "description": "end_date_of_week"
+                  },
+                  "leave_details": {
+                    "type": "string",
+                    "description": "leave_details"
+                  },
+                  "leave_end_date": {
+                    "type": "string",
+                    "description": "leave_end_date"
+                  },
+                  "leave_request_id": {
+                    "type": "string",
+                    "description": "leave_request_id"
+                  },
+                  "leave_start_date": {
+                    "type": "string",
+                    "description": "leave_start_date"
+                  },
+                  "leave_status": {
+                    "type": "string",
+                    "description": "leave_status"
+                  },
+                  "leave_title": {
+                    "type": "string",
+                    "description": "leave_title"
+                  },
+                  "manager": {
+                    "type": "string",
+                    "description": "manager"
+                  },
+                  "no_of_leaves": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "no_of_leaves"
+                  },
+                  "start_date_of_week": {
+                    "type": "string",
+                    "description": "start_date_of_week"
+                  },
+                  "manager_email": {
+                    "type": "string",
+                    "description": "manager_email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all leave records",
+        "description": "Get all leave records from sharepoint",
+        "operationId": "MyAllLeaves",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/leaveapi/v1/leaves/approved": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "TimesheetWeek": {
+                    "type": "string",
+                    "description": "TimesheetWeek"
+                  },
+                  "Title": {
+                    "type": "string",
+                    "description": "Title"
+                  },
+                  "date_of_request": {
+                    "type": "string",
+                    "description": "date_of_request"
+                  },
+                  "day_of_leave": {
+                    "type": "string",
+                    "description": "day_of_leave"
+                  },
+                  "emp_name": {
+                    "type": "string",
+                    "description": "emp_name"
+                  },
+                  "end_date_of_week": {
+                    "type": "string",
+                    "description": "end_date_of_week"
+                  },
+                  "leave_details": {
+                    "type": "string",
+                    "description": "leave_details"
+                  },
+                  "leave_end_date": {
+                    "type": "string",
+                    "description": "leave_end_date"
+                  },
+                  "leave_request_id": {
+                    "type": "string",
+                    "description": "leave_request_id"
+                  },
+                  "leave_start_date": {
+                    "type": "string",
+                    "description": "leave_start_date"
+                  },
+                  "leave_status": {
+                    "type": "string",
+                    "description": "leave_status"
+                  },
+                  "leave_title": {
+                    "type": "string",
+                    "description": "leave_title"
+                  },
+                  "manager": {
+                    "type": "string",
+                    "description": "manager"
+                  },
+                  "no_of_leaves": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "no_of_leaves"
+                  },
+                  "start_date_of_week": {
+                    "type": "string",
+                    "description": "start_date_of_week"
+                  },
+                  "manager_email": {
+                    "type": "string",
+                    "description": "manager_email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all approved leaves",
+        "description": "Get all approved leaves",
+        "operationId": "MyApprovedLeaves",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/leaveapi/v1/leaves/pending": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "TimesheetWeek": {
+                    "type": "string",
+                    "description": "TimesheetWeek"
+                  },
+                  "Title": {
+                    "type": "string",
+                    "description": "Title"
+                  },
+                  "date_of_request": {
+                    "type": "string",
+                    "description": "date_of_request"
+                  },
+                  "day_of_leave": {
+                    "type": "string",
+                    "description": "day_of_leave"
+                  },
+                  "emp_name": {
+                    "type": "string",
+                    "description": "emp_name"
+                  },
+                  "end_date_of_week": {
+                    "type": "string",
+                    "description": "end_date_of_week"
+                  },
+                  "leave_details": {
+                    "type": "string",
+                    "description": "leave_details"
+                  },
+                  "leave_end_date": {
+                    "type": "string",
+                    "description": "leave_end_date"
+                  },
+                  "leave_request_id": {
+                    "type": "string",
+                    "description": "leave_request_id"
+                  },
+                  "leave_start_date": {
+                    "type": "string",
+                    "description": "leave_start_date"
+                  },
+                  "leave_status": {
+                    "type": "string",
+                    "description": "leave_status"
+                  },
+                  "leave_title": {
+                    "type": "string",
+                    "description": "leave_title"
+                  },
+                  "manager": {
+                    "type": "string",
+                    "description": "manager"
+                  },
+                  "manager_email": {
+                    "type": "string",
+                    "description": "manager_email"
+                  },
+                  "no_of_leaves": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "no_of_leaves"
+                  },
+                  "start_date_of_week": {
+                    "type": "string",
+                    "description": "start_date_of_week"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all pending leaves",
+        "description": "Get all pending leaves",
+        "operationId": "MyPendingLeaves",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {},
+  "security": [],
+  "tags": []
+}
