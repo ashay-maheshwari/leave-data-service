@@ -6,13 +6,16 @@ from flask import request, jsonify
 from shareplum import Site
 from shareplum import Office365
 
+#Python package for geocode location 
+from geopy.geocoders import Nominatim
+geolocator = Nominatim(user_agent="Simple Application")
 
 #Sharepoint site information
 server_url = "https://ytpl.sharepoint.com"
 site_url = "https://ytpl.sharepoint.com/sites/demosite/PowerApps/"
 
 username = ""
-passwd = ""
+passwd = "" 
 leave_balance_list = 'lm_emp_leave_balance_record'
 leave_records_list = 'lm_employee_leave_record'
 
@@ -145,6 +148,21 @@ def get_pending_leave_records():
 
 
 
-#Run the app on All IP and 8081 port
-app.run(host='0.0.0.0' , port=8081)
+
+#--------------------------------------------------------------------------------------------------------------
+#Route to get city name based on latitude and longitude  
+#--------------------------------------------------------------------------------------------------------------
+@app.route('/leaveapi/v1/location', methods = ['GET'])
+def get_location():
+	if 'lat' in request.args and 'lon' in request.args:
+		latitute = request.args['lat']
+		longitude = request.args['lon']
+		lat_lon = latitute + "," + longitude
+		location = geolocator.reverse(lat_lon)
+		records = location.raw
+		address = records['address']
+		return jsonify(address)				
+
+#Run the app on All IP and 8082 port
+app.run(host='0.0.0.0' , port=8082)
 
